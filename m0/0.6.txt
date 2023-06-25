@@ -1,0 +1,5 @@
+sequenceDiagram
+    # POST new notes ON single page app
+
+    browser-->>+server: POST https://studies.cs.helsinki.fi/exampleapp/new_note_spa
+    server-->>-browser: new note inserted status 201 created
