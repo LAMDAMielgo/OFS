@@ -37,10 +37,10 @@ const Total = (props) => {
   )
 }
 
-const State = (props) => {
+const Display = ({counter}) => {
   return (
     <p>
-      Num total of counts {props.counter}
+      Counter State {counter}
     </p>
   )
 }
@@ -48,15 +48,19 @@ const State = (props) => {
 const CounterButton = ({counter, setCounter}) => {
   const increaseByOne=() => setCounter(counter +1)
   const setToZero=() => setCounter(0)
+  const decreaseByOne=()=>setCounter(counter-1)
+
+  const Button = (props) => {
+    return (
+      <button onClick={props.onClick}>{props.text}</button>
+    )
+  }
 
   return (
     <div id="buttonContainer">
-      <button onClick={increaseByOne}>
-        Add Counter
-      </button>
-      <button onClick={setToZero}>
-        Reset Counter
-      </button>
+      <Button onClick={increaseByOne} text="Add Counter" />
+      <Button onClick={setToZero} text="Reset Counter" />
+      <Button onClick={decreaseByOne} text="Substract Counter" />
     </div>
   )
 }
@@ -79,7 +83,7 @@ const App = () => {
         <Header name = {renderData['course']} />
         <Content lines = {renderData['parts']} />
         <Total lines = {renderData['parts']} />
-        <State counter={c} />
+        <Display counter={c} />
       </div>
     )
     }
