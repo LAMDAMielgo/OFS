@@ -7,11 +7,14 @@ const Header = (props) => {
 }
 
 
-const Content = (props) => {  
+const Content = (props) => {
+  // NOTE on 1.2: insteads static asigning, a for loop
+  // for each line renders text and then number, no need
+  // to create a Part sub component for the content
   return (
-    props.lines.map((item, i) => 
+    props.lines.map(line => 
       <p>
-        {item.p} {item.n}
+        {line.text} {line.number}
       </p>
     )
   )
@@ -35,9 +38,9 @@ const App = () => {
     const renderData = {
       "course":'Half Stack application development',
       "parts": [
-        {"p": "Fundamentals of React",    "n": 10},
-        {"p": "Using props to pass data", "n": 7},
-        {"p": "State of a component",     "n": 14}
+        {"text": "Fundamentals of React",    "number": 10},
+        {"text": "Using props to pass data", "number": 7},
+        {"text": "State of a component",     "number": 14}
       ]
     }
 
