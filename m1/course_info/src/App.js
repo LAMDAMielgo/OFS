@@ -37,30 +37,53 @@ const Total = (props) => {
   )
 }
 
-const Display = ({counter}) => {
+const Display = ({counter, total}) => {
+  // Conditional rendering
+  if (counter == 0) {
+    return (
+      <p>
+        The app is used by pressing the buttons
+      </p>
+    )
+  } else {
+    return [
+      <p>Total Clicks   {total}</p>,
+      <p>History Clicks {counter}</p>
+    ]
+  }
+}
+
+const Button = (props) => {
+  // Used inside ClicksButtons
+  // Never nesting components -> React doesn't optimize
+  // performance and treats them as new elements when
+  // re-rendering
   return (
-    <p>
-      Counter State {counter}
-    </p>
+    <button onClick={props.onClick}>{props.text}</button>
   )
 }
 
-const CounterButton = ({counter, setCounter}) => {
-  const increaseByOne=() => setCounter(counter +1)
-  const setToZero=() => setCounter(0)
-  const decreaseByOne=()=>setCounter(counter-1)
+const ClicksButtons = ({states}) => {
+  // Complex state rendering
+  // Each time handle.. is called, the App and Display
+  // components are re-rendered
+  const [l, setL] = states[0]
+  const [r, setR] = states[1]
+  const [all, setAll] = states[2]
 
-  const Button = (props) => {
-    return (
-      <button onClick={props.onClick}>{props.text}</button>
-    )
+  const handleLeftClick=() => {
+    setAll(all.concat('L'))
+    setL(l+1)
   }
-
+  const handleRightClick=() => {
+    setAll(all.concat('R'))
+    setR(r+1)
+  }
+  
   return (
     <div id="buttonContainer">
-      <Button onClick={increaseByOne} text="Add Counter" />
-      <Button onClick={setToZero} text="Reset Counter" />
-      <Button onClick={decreaseByOne} text="Substract Counter" />
+      <Button onClick={handleLeftClick}  text="LEFT" />
+      <Button onClick={handleRightClick} text="RIGHT"/>
     </div>
   )
 }
@@ -75,15 +98,18 @@ const App = () => {
       ]
     }
 
-    const [c, setC] = useState(0)
+    // Instantiate states for buttons
+    const [l, setL] = useState(0)
+    const [r, setR] = useState(0)
+    const [all, setAll] = useState([])
        
     return (
       <div id="outer">
-        <CounterButton counter={c} setCounter={setC}/>
+        <ClicksButtons states={[[l, setL], [r, setR],[all, setAll]]}/>
         <Header name = {renderData['course']} />
         <Content lines = {renderData['parts']} />
         <Total lines = {renderData['parts']} />
-        <Display counter={c} />
+        <Display counter={all.join(" ")} total={all.length} />
       </div>
     )
     }
