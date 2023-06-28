@@ -22,3 +22,29 @@ Basic understanding about web pages.
 ---
 
 ### [M1] React
+
+Basic understanding of React library.
+
+To initialize each exercise; instead of download the [first-react-template](!)
+
+everything was setup from scratch following the steps from [here](!https://javascript.plainenglish.io/create-a-react-app-from-scratch-in-2021-8e9948602e9c):
+
+```
+mkdir {exercicename} && cd {exercicename}
+mkdir src
+touch src/index.js && touch src/App.js
+
+npm init -y
+npm i webpack babel-loader @babel/preset-react @babel/core babel-preset-react html-webpack-plugin webpack-dev-server css-loader style-loader @babel/plugin-proposal-class-properties webpack-cli -D && npm i react react-dom -S
+
+touch .babelrc && touch webpack.config.js
+```
+
+
+
+Exercices:
+
+* **1.1 courseinfo**
+
+  Given an `index.js`code and a `App.js` code *refactor* everything to fit into three compoents : *Header, Content and Total*. 
+
