@@ -22,8 +22,9 @@ const Content = (props) => {
 
 
 const Total = (props) => {
+  // could be a for loop with a let total = 0;
   const arr_num = props.lines.reduce((total, obj) =>
-      obj.n + total, 0
+      obj.number + total, 0
   )
 
   return (
