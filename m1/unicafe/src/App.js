@@ -20,21 +20,23 @@ const Stats = ({values}) => {
     _eval += value*stats_value[key]
   }
   
-  const getPercentage = (v, t) =>{
-    if (v==0){return 0} else {return (v*100/t).toFixed(2) + " %"}
-  }
-  const getMean = (v,t)=>{
-    if (v==0){return "No votes"} else {return (v/t).toFixed(2)}
-  }
+  const getPercentage=(v,t)=> (v*100/t).toFixed(2) +" "+"%"
+  const getMean=(v,t)=> (v/t).toFixed(2)
 
-  return [
-    <li>Good    : {values['g']}</li>,
-    <li>Neutral : {values['n']}</li>,
-    <li>Bad     : {values['b']}</li>,
-    <li>All     : {total}</li>,
-    <li>Average : {getMean(_eval, total)}</li>,
-    <li>Positive: {getPercentage(values["g"], total)}</li>
-  ]
+  if(total == 0){
+    return (
+      <li>No feedback given</li>
+    )
+  } else {
+    return [
+      <li>Good    : {values['g']}</li>,
+      <li>Neutral : {values['n']}</li>,
+      <li>Bad     : {values['b']}</li>,
+      <li>All     : {total}</li>,
+      <li>Average : {getMean(_eval, total)}</li>,
+      <li>Positive: {getPercentage(values["g"], total)}</li>
+    ]
+  }
 }
 
 const Button = ({onClick, text}) => {
