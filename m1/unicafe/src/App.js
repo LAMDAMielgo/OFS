@@ -1,32 +1,39 @@
 import { useState } from 'react'
 
-
-const Header = (text) => {
+const Header = (props) => {
   return (
-    <h1>{text}</h1>
+    <h1>{props.text}</h1>
   )
 }
 
-const Stats =(g, b, n)=>{
+const Stats = ({values}) => {
+  
+  let stats_value = {
+    "g" : 1, "n" : 0, "b": -1
+  }
+  let _eval = 0;
+  let total = 0
 
-  const _eval =(values)=>{
-    let stat_value = {
-      "g" : 1, "n" : 0, "b": -1
-    }
-    
-    return Object.entries(values).forEach(
-      ([k, v]) => v * stat_value[k]
-    )
+  'use strict';
+  for (const [key, value] of Object.entries(values)) {
+    total += value;
+    _eval += value*stats_value[key]
+  }
+  
+  const getPercentage = (v, t) =>{
+    if (v==0){return 0} else {return (v*100/t).toFixed(2) + " %"}
+  }
+  const getMean = (v,t)=>{
+    if (v==0){return "No votes"} else {return (v/t).toFixed(2)}
   }
 
-  const total = g+b+n
-
   return [
-    <li>Good    : {g}</li>,
-    <li>Neutral : {n}</li>,
-    <li>Bad     : {b}</li>,
-    <li>Average : { _eval({"g":g, "n":n, "b": b}) / total}</li>,
-    <li>Positive: {g / total}</li>
+    <li>Good    : {values['g']}</li>,
+    <li>Neutral : {values['n']}</li>,
+    <li>Bad     : {values['b']}</li>,
+    <li>All     : {total}</li>,
+    <li>Average : {getMean(_eval, total)}</li>,
+    <li>Positive: {getPercentage(values["g"], total)}</li>
   ]
 }
 
@@ -36,7 +43,7 @@ const Button = ({onClick, text}) => {
   )
 }
 
-const FeedBackButtons=(g, b, n)=>{
+const FeedBackButtons=({g, n, b})=>{
   /* Grouping of good - neutral - bad buttons and
   the state handling for all of them
   */
@@ -68,8 +75,8 @@ const App = () => {
         n={{"neutral": neutral, "setNeutral": setNeutral}}
         b={{"bad": bad,         "setBad": setBad}}
       />
-      <Header text='Statistics' 
-        g={good}  n={neutral}  v={bad}
+      <Header text='Statistics' />
+      <Stats values={{"g": good, "n": neutral, "b": bad}}
       />
     </div>
   )
