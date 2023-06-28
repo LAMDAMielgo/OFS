@@ -6,6 +6,10 @@ const Header = (props) => {
   )
 }
 
+const StatisticLine = ({text, value})=>{
+  return (<li>{text} : {value}</li>)
+}
+
 const Stats = ({values}) => {
   
   let stats_value = {
@@ -29,12 +33,12 @@ const Stats = ({values}) => {
     )
   } else {
     return [
-      <li>Good    : {values['g']}</li>,
-      <li>Neutral : {values['n']}</li>,
-      <li>Bad     : {values['b']}</li>,
-      <li>All     : {total}</li>,
-      <li>Average : {getMean(_eval, total)}</li>,
-      <li>Positive: {getPercentage(values["g"], total)}</li>
+      <StatisticLine text="Good"     value={values['g']} />,
+      <StatisticLine text="Neutral"  value={values['n']} />,
+      <StatisticLine text="Bad"      value={values['b']} />,
+      <StatisticLine text="All"      value={total} />,
+      <StatisticLine text="Average"  value={getMean(_eval, total)} />,
+      <StatisticLine text="Positive" value={getPercentage(values["g"], total)} />
     ]
   }
 }
