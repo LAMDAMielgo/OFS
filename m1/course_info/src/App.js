@@ -1,3 +1,5 @@
+import { useState } from "react"
+
 const Header = (props) => {
     return (
       <h1>
@@ -35,6 +37,25 @@ const Total = (props) => {
   )
 }
 
+const CounterButton = () => {
+
+  const [counter, setCounter] = useState(0)
+  const increaseByOne=() => setCounter(counter +1)
+  const setToZero=() => setCounter(0)
+
+  console.log(counter)
+  return (
+    <div>
+      <button onClick={increaseByOne}>
+        Add Counter
+      </button>
+      <button onClick={setToZero}>
+        Reset Counter
+      </button>
+    </div>
+  )
+}
+
 const App = () => {
     const renderData = {
       "course":'Half Stack application development',
@@ -45,8 +66,11 @@ const App = () => {
       ]
     }
 
+       
+
     return (
       <div>
+        <CounterButton />
         <Header name = {renderData['course']} />
         <Content lines = {renderData['parts']} />
         <Total lines = {renderData['parts']} />
