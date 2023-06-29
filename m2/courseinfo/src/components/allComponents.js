@@ -1,10 +1,13 @@
 import { useState } from "react"
-import {appContent} from '../data/course'
 
 // basic components 
 // --------------------------------------------------
 const Header = ({name, id}) => {
     return <h1 id={id}>{name}</h1>
+}
+
+const SubHeader =({name, id}) => {
+    return <h2 id={id}>{name}</h2>
 }
 
 const Content = ({lines}) => {
@@ -23,22 +26,22 @@ const Footer = ({line}) => {
 
 // aggregated Information
 // --------------------------------------------------
-const getTotal = () => {
+const getTotal = (course) => {
 
     return ({
         content: "Number of exercises",
-        exercises : appContent['parts'].reduce(
+        exercises : course['parts'].reduce(
             (total, o) => total+ o.exercises, 0
         )
     })
 
 }
 
-
 // --------------------------------------------------
 
 export {
     Header, 
+    SubHeader,
     Content,
     Footer,
     getTotal

@@ -1,8 +1,7 @@
-import { useState } from "react"
-
 import {appContent} from './data/course'
 import {
   Header, 
+  SubHeader,
   Content, 
   Footer,
   getTotal
@@ -12,12 +11,12 @@ import {
 
 const Course = ({course}) => {
 
-    const total = getTotal()
+    const total = getTotal(course)
 
     return (
       <div id="outer">
-          <Header name={appContent['name']} id={appContent['id']} />
-          <Content lines = {appContent['parts']} />
+          <SubHeader name={course['name']} id={course['id']} />
+          <Content lines = {course['parts']} />
           <Footer line ={total} />
       </div>
   )
@@ -26,7 +25,17 @@ const Course = ({course}) => {
 
 
 const App = () => {
-    return <Course course={appContent} />
+
+    return [
+        <Header 
+            name="WebDev Curriculum"
+            id={0} 
+        />,
+        <>{ appContent.map(
+                c => <Course course={c} />
+            )
+        }</>
+    ]
 }
 
 
