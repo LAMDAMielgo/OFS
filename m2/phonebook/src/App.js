@@ -1,26 +1,38 @@
 import { useState } from 'react'
+import { Subheader, Content } from './components/Components'
+import { PersonsForm } from './components/PersonsForm'
+
+
 
 const App = () => {
-  const [persons, setPersons] = useState([
-    { name: 'Arto Hellas' }
-  ]) 
-  const [newName, setNewName] = useState('')
 
-  return (
-    <div>
-      <h2>Phonebook</h2>
-      <form>
+    const [persons, setPersons] = useState([{name: 'Arto Hellas'}]) 
+    const [newName, setNewName] = useState('')
+
+    const handleFormOnChange = (event) => {
+        setNewName(event.target.value)
+    }
+    
+    const handleFormOnSubmit = (event) =>  {
+        event.preventDefault()
+        const personObject = {name : newName}
+
+        setPersons(persons.concat(personObject))
+        setNewName("")
+    }
+
+    return (
         <div>
-          name: <input />
+            <Subheader text={'Phonebook'} />
+            <PersonsForm 
+                onSubmit={handleFormOnSubmit}
+                onChange={handleFormOnChange}
+                name={newName}
+            />
+            <Subheader text={'Numbers'} />
+            <Content lines = {persons} />
         </div>
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form>
-      <h2>Numbers</h2>
-      ...
-    </div>
-  )
+    )
 }
 
 export default App
