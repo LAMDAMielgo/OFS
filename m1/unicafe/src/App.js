@@ -1,21 +1,16 @@
 import { useState } from 'react'
 
-const Header = (props) => {
-  return (
-    <h1>{props.text}</h1>
-  )
-}
+const Header = (props) => <h1>{props.text}</h1>
 
-const StatisticLine = ({text, value})=>{
-  return (<tr><th>{text}</th><th>{value}</th></tr>)
-}
+const StatisticLine = ({text, value})=><tr><th>{text}</th><th>{value}</th></tr>
+
+const Button = ({onClick, text}) => <button onClick={onClick}>{text}</button>
+
 
 const Stats = ({values}) => {
   
-  let stats_value = {
-    "g" : 1, "n" : 0, "b": -1
-  }
-  let _eval = 0;
+  let stats_value = {"g" : 1, "n" : 0, "b": -1}
+  let _eval = 0
   let total = 0
 
   'use strict';
@@ -45,11 +40,6 @@ const Stats = ({values}) => {
   }
 }
 
-const Button = ({onClick, text}) => {
-  return (
-    <button onClick={onClick}>{text}</button>
-  )
-}
 
 const FeedBackButtons=({g, n, b})=>{
   /* Grouping of good - neutral - bad buttons and
