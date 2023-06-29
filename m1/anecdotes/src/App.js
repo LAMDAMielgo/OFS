@@ -11,7 +11,7 @@ const Button = ({onClick, text}) => <button onClick={onClick}>{text}</button>
 
 
 // status trigger 
-const ActionTrigger=({index, setIndex, setVote})=>{
+const DisplayRandom=({index, setIndex, setVote})=>{
 
   const handleNextAnecdote = () => {
     // min equal to zero (first index == 0)
@@ -20,6 +20,7 @@ const ActionTrigger=({index, setIndex, setVote})=>{
     setIndex(i)
   }
 
+  // doesnt work !
   const handleVote = () => {
     // copy and update vote key at index
     const newAnecdotes = { ...anecdotes }
@@ -28,10 +29,13 @@ const ActionTrigger=({index, setIndex, setVote})=>{
   }
 
   return (
+      <>
+      <Display index={index}/>
       <div id='buttonDiv'>
         <Button onCLick={handleVote} text="vote" />
         <Button onClick={handleNextAnecdote} text="next anecdote" />
       </div>
+      </>
   )
 }
 
@@ -72,15 +76,13 @@ const App = () => {
   return (
     <div id='mainDiv'>
       <Header text="Anecdote of the day" />
-      <Display index={index}/>
-      <ActionTrigger 
+      <DisplayRandom 
           index={index} 
           setIndex={setIndex} 
           setVote={setVote} 
       />
       <Header text="Anecdote with most votes" />
       <DisplayMaxVoted />
-
     </div>
   )
 }
