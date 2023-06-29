@@ -3,7 +3,6 @@ import { Subheader, Content } from './components/Components'
 import { PersonsForm } from './components/PersonsForm'
 
 
-
 const App = () => {
 
     const [persons, setPersons] = useState([{name: 'Arto Hellas'}]) 
@@ -15,11 +14,23 @@ const App = () => {
     
     const handleFormOnSubmit = (event) =>  {
         event.preventDefault()
-        const personObject = {name : newName}
+        const newPerson = {name : newName}
 
-        setPersons(persons.concat(personObject))
-        setNewName("")
+        const alreadyExists = persons.filter(
+            p => p.name == newPerson.name
+        ).length !== 0
+        
+
+        if (alreadyExists) {
+            // issue an Alert
+            alert(`${newPerson.name} is already added to phonebook`)
+        } else {
+            setPersons(persons.concat(newPerson))
+            setNewName("")
+        }
     }
+
+
 
     return (
         <div>
