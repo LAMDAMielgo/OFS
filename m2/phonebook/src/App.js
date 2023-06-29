@@ -5,43 +5,45 @@ import { PersonsForm } from './components/PersonsForm'
 
 const App = () => {
 
-    const [persons, setPersons] = useState([{name: 'Arto Hellas'}]) 
-    const [newName, setNewName] = useState('')
+    const [persons, setPersons] = useState([{name: 'Arto Hellas', phone: '+64967842678'}]) 
+    const [newP, setP] = useState({name: '', phone: ''})
 
     const handleFormOnChange = (event) => {
-        setNewName(event.target.value)
+        console.log(event)
+        const { name, value } = event.target
+        setP({ ...newP, [name]: value })
     }
-    
+
     const handleFormOnSubmit = (event) =>  {
         event.preventDefault()
-        const newPerson = {name : newName}
+        const newPerson = {name: newP.name, phone : newP.phone}
 
-        const alreadyExists = persons.filter(
-            p => p.name == newPerson.name
+        const invalidPhone = 12 >= newPerson.phone.length >= 9 
+        const nameAlreadyExists = persons.filter(
+            p => p.name.toLowerCase() == newPerson.name.toLowerCase()
         ).length !== 0
         
 
-        if (alreadyExists) {
-            // issue an Alert
+        if (nameAlreadyExists) {
             alert(`${newPerson.name} is already added to phonebook`)
-        } else {
+        } else if (invalidPhone) {
+            alert(`${newPerson.phone} is invalid`)          
+        }else {
             setPersons(persons.concat(newPerson))
-            setNewName("")
+            setP("")
         }
     }
-
-
 
     return (
         <div>
             <Subheader text={'Phonebook'} />
             <PersonsForm 
                 onSubmit={handleFormOnSubmit}
+                newPerson={newP}
                 onChange={handleFormOnChange}
-                name={newName}
             />
             <Subheader text={'Numbers'} />
-            <Content lines = {persons} />
+            <Content lines={persons} />
         </div>
     )
 }

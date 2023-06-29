@@ -5,8 +5,9 @@ import { Button } from './Components'
 const FormEntry = ({name, value, onChange}) => {
     return (
         <div>
-            {name}: 
+            {name}:{" "}
             <input 
+                name = {name}
                 value={value} 
                 onChange={onChange}
             />
@@ -15,13 +16,18 @@ const FormEntry = ({name, value, onChange}) => {
 }
 
 
-const PersonsForm = ({onSubmit, onChange, name}) => {
-
+const PersonsForm = ({onSubmit, newPerson, onChange}) => {
+    
     return (
         <form onSubmit={onSubmit}>
             <FormEntry  
                 name="name"
-                value={name}                     
+                value={newPerson.name}                     
+                onChange={onChange}
+            />
+            <FormEntry  
+                name="phone"
+                value={newPerson.phone}                 
                 onChange={onChange}
             />
             <Button type="submit" name="add" />      
