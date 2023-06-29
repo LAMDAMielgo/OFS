@@ -3,11 +3,11 @@ import { useState } from "react"
 // basic components 
 // --------------------------------------------------
 const Header = ({name, id}) => {
-    return <h1 id={id}>{name}</h1>
+    return <h1 key={id}>{name}</h1>
 }
 
 const SubHeader =({name, id}) => {
-    return <h2 id={id}>{name}</h2>
+    return <h2 key={id}>{name}</h2>
 }
 
 const Content = ({lines}) => {
