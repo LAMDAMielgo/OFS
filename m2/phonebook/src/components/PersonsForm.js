@@ -15,8 +15,8 @@ const PersonsForm = ({onSubmit, newPerson, onChange}) => {
                 onChange={onChange}
             />
             <FormEntry  
-                name="phone"
-                value={newPerson.phone}                 
+                name="number"
+                value={newPerson.number}                 
                 onChange={onChange}
             />
             <Button type="submit" name="add" />      

@@ -14,20 +14,19 @@ const Button = ({type, name}) => {
 const Content = ({lines}) => {
     return (
         lines.map((line, i) => 
-            <tr key={i} class = 'cell'>
-                <th>{line.name}</th>
-                <th><pre class="tab">
-                {line.number}
-                </pre></th>
+            <tr key={i}>
+                <th><pre className='cell'>{line.name}</pre></th>
+                <th><pre className='cell'>{line.number}</pre></th>
             </tr>
         )
     )
 }
 
 const FormEntry = ({name, value, onChange}) => {
+
     return (
         <div>
-            <h class='entry-tag'>{name} : {" "}</h>
+            {name}   
             <input
                 name = {name}
                 value={value} 

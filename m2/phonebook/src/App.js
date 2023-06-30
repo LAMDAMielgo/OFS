@@ -1,16 +1,30 @@
-import { useState } from 'react'
+import { 
+    useEffect, 
+    useState,
+    useMemo,
+    useCallback
+} from 'react'
+import axios from 'axios'
+
 import { Subheader, Content } from './components/Components'
 import { PersonsForm } from './components/PersonsForm'
 import { FilterForm } from './components/FilterForm'
-import { Data } from './components/MockData'
 
 
 const App = () => {
 
-    const [persons, setPersons] = useState(Data) 
-    const [newP, setP] = useState({name: '', phone: ''})
+    const [persons, setPersons] = useState([]) 
+    const [newP, setP] = useState({name: '', number: ''})
     const [newFilter, setFilter] = useState(" ")
 
+    // Get data from server
+    useEffect(
+        () => {
+            axios
+                .get('http://localhost:3001/persons')
+                .then(response => (setPersons(response.data)))
+        }
+    )
 
     // Filtering phonebook
     const handleFilterFormOnChange = (event) => {
@@ -34,11 +48,11 @@ const App = () => {
         setP({ ...newP, [name]: value })
     }
 
-    const handleFormOnSubmit = (event) =>  {
+    const handleFormOnSubmit = (event) => {
         event.preventDefault()
-        const newPerson = {name: newP.name, phone : newP.phone}
+        const newPerson = {name: newP.name, number : newP.number}
 
-        const invalidPhone = 12 >= newPerson.phone.length >= 9 
+        const invalidPhone = 12 >= newPerson.number.length >= 9 
         const nameAlreadyExists = persons.filter(
             p => p.name.toLowerCase() == newPerson.name.toLowerCase()
         ).length !== 0
@@ -47,14 +61,12 @@ const App = () => {
         if (nameAlreadyExists) {
             alert(`${newPerson.name} is already added to phonebook`)
         } else if (invalidPhone) {
-            alert(`${newPerson.phone} is an invalid phone number`)          
+            alert(`${newPerson.number} is an invalid phone number`)          
         }else {
             setPersons(persons.concat(newPerson))
             setP("")
         }
     }
-
-    console.log("pee", newFilter)
 
     return (
         <div>
@@ -70,9 +82,9 @@ const App = () => {
                 onChange={handleFormOnChange}
             />
             <Subheader text={'Numbers'} />
-            <table>
+            <table><tbody>
                 <Content lines={filteredPersons} />
-            </table>
+            </tbody></table>
         </div>
     )
 }
