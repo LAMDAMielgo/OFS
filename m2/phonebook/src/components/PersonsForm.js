@@ -1,19 +1,8 @@
 import { useState } from 'react'
-import { Button } from './Components'
+import { Button, FormEntry } from './Components'
 
 
-const FormEntry = ({name, value, onChange}) => {
-    return (
-        <div>
-            {name}:{" "}
-            <input 
-                name = {name}
-                value={value} 
-                onChange={onChange}
-            />
-        </div>
-    )
-}
+
 
 
 const PersonsForm = ({onSubmit, newPerson, onChange}) => {
