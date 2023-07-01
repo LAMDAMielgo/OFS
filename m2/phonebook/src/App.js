@@ -20,25 +20,25 @@ const App = () => {
     // Get data from server
     useEffect(
         () => {
-            axios
-                .get('http://localhost:3001/persons')
-                .then(response => (setPersons(response.data)))
+            axios.get('http://localhost:3001/persons')
+                 .then(response => (setPersons(response.data)))
         }
     )
 
     // Filtering phonebook
     const handleFilterFormOnChange = (event) => {
-        console.log("pii", event.target)
-
         const filterContent = event.target.value
-        console.log('poo', filterContent)
         setFilter(filterContent)
     }
 
-    const filteredPersons = persons.filter(
+    const filterPersonsFactory = () => () => persons.filter(
         person => person.name
             .toLowerCase()
             .includes(newFilter.toLowerCase())
+    )
+
+    const filteredPersons = useMemo(
+        filterPersonsFactory(), [persons, newFilter]
     )
     
 
@@ -63,6 +63,11 @@ const App = () => {
         } else if (invalidPhone) {
             alert(`${newPerson.number} is an invalid phone number`)          
         }else {
+            
+            // add note to the server
+            axios.post('http://localhost:3001/persons', newPerson)
+                 .then(response => console.log(response))
+
             setPersons(persons.concat(newPerson))
             setP("")
         }

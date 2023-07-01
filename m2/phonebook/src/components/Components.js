@@ -12,6 +12,7 @@ const Button = ({type, name}) => {
 }
 
 const Content = ({lines}) => {
+
     return (
         lines.map((line, i) => 
             <tr key={i}>
