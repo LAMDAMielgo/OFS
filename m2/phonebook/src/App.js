@@ -10,6 +10,8 @@ import { Subheader, Content } from './components/Components'
 import { PersonsForm } from './components/PersonsForm'
 import { FilterForm } from './components/FilterForm'
 
+import personService from './services/Persons'
+
 
 const App = () => {
 
@@ -20,8 +22,9 @@ const App = () => {
     // Get data from server
     useEffect(
         () => {
-            axios.get('http://localhost:3001/persons')
-                 .then(response => (setPersons(response.data)))
+            personService
+                .getAll()
+                .then(initPersons => setPersons(initPersons))
         }
     )
 
@@ -31,16 +34,11 @@ const App = () => {
         setFilter(filterContent)
     }
 
-    const filterPersonsFactory = () => () => persons.filter(
+    const filteredPersons = persons.filter(
         person => person.name
             .toLowerCase()
             .includes(newFilter.toLowerCase())
-    )
-
-    const filteredPersons = useMemo(
-        filterPersonsFactory(), [persons, newFilter]
-    )
-    
+    )    
 
     // Adding new rows to phonebook
     const handleFormOnChange = (event) => {
@@ -60,16 +58,20 @@ const App = () => {
 
         if (nameAlreadyExists) {
             alert(`${newPerson.name} is already added to phonebook`)
-        } else if (invalidPhone) {
-            alert(`${newPerson.number} is an invalid phone number`)          
-        }else {
-            
-            // add note to the server
-            axios.post('http://localhost:3001/persons', newPerson)
-                 .then(response => console.log(response))
 
-            setPersons(persons.concat(newPerson))
-            setP("")
+        } else if (invalidPhone) {
+            alert(`${newPerson.number} is an invalid phone number`) 
+
+        }else {
+            // add note to the server
+            personService
+                .create(newPerson)
+                .then(returnedPerson => {
+                    setPersons(persons.concat(returnedPerson)) 
+                })
+            
+            setP({name: '', number: ''})
+                           
         }
     }
 
