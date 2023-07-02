@@ -22,6 +22,7 @@ const create = newObject => {
 }
 
 const update = (id, newObject) => {
+
   return axios
     .put(`${baseUrl}/${id}`, newObject)
     .then(response => responseSuccess(response))

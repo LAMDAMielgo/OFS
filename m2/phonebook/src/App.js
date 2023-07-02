@@ -58,7 +58,18 @@ const App = () => {
         
 
         if (nameAlreadyExists) {
-            alert(`${newPerson.name} is already added to phonebook`)
+            let _msg = `${newPerson.name} is already added to phonebook,`+
+                        `\n do you want to update the phone number?`
+            
+            let existingPerson = persons.filter(p => p.name === newPerson.name)[0]
+                    
+            if (window.confirm(_msg) === true) {
+                personService
+                    .update(existingPerson.id, newPerson)
+                    .then(newP => setPersons(
+                        persons.filter(p => p != newP.id ? p : newP )
+                    ))
+            } else { }
 
         } else if (invalidPhone) {
             alert(`${newPerson.number} is an invalid phone number`) 
@@ -97,6 +108,7 @@ const App = () => {
         } else {}
 
     }
+
 
     return (
         <div>
