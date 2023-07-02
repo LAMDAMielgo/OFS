@@ -31,7 +31,6 @@ const update = (id, newObject) => {
 const destroy = (toDelId) => {
     return axios
       .delete(`${baseUrl}/${toDelId}`)
-      .then(response => console.log(response))
   }
 
 

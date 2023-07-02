@@ -1,12 +1,12 @@
 import { useState } from 'react'
 
 const Subheader = ({text}) => { 
-    return <h2>{text}</h2>
+    return <h2 className='h2'>{text}</h2>
 }
 const Button = ({type, name}) => {
     return (
         <div>
-            <button type={type}>{name}</button>
+            <button className='add-button' type={type}>{name}</button>
         </div>
     )
 }
@@ -18,10 +18,11 @@ const Content = ({lines, onClick}) => {
                 <th><pre className='cell'>{line.name}</pre></th>
                 <th><pre className='cell'>{line.number}</pre></th>
                 <th><button 
+                        className='delete-button'
                         name={line.name}
                         id={line.id}
                         onClick={onClick}>
-                            Delete contact
+                            delete
                 </button></th>
             </tr>
         )

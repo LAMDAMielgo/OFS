@@ -19,7 +19,7 @@ const PersonsForm = ({onSubmit, newPerson, onChange}) => {
                 value={newPerson.number}                 
                 onChange={onChange}
             />
-            <Button type="submit" name="add" />      
+            <Button className='delete-button' type="submit" name="add" />      
         </form>
     )
 }

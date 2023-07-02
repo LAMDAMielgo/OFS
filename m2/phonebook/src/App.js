@@ -8,6 +8,7 @@ import {
 import { Subheader, Content } from './components/Components'
 import { PersonsForm } from './components/PersonsForm'
 import { FilterForm } from './components/FilterForm'
+import { Notification } from './components/Notification'
 
 import personService from './services/Persons'
 
@@ -17,7 +18,7 @@ const App = () => {
     const [persons, setPersons] = useState([]) 
     const [newP, setP] = useState({name: '', number: ''})
     const [newFilter, setFilter] = useState(" ")
-
+    const [notice, setNotice] = useState(null)
 
     // Get data from server
     useEffect(
@@ -64,11 +65,14 @@ const App = () => {
             let existingPerson = persons.filter(p => p.name === newPerson.name)[0]
                     
             if (window.confirm(_msg) === true) {
+
                 personService
                     .update(existingPerson.id, newPerson)
-                    .then(newP => setPersons(
-                        persons.filter(p => p != newP.id ? p : newP )
-                    ))
+                    .then(newP => {
+                        setNotice({content:`Updated ${ newPerson.name }`})
+                        setPersons(persons.filter(p => p != newP.id ? p : newP))
+                    })               
+                
             } else { }
 
         } else if (invalidPhone) {
@@ -79,12 +83,13 @@ const App = () => {
             personService
                 .create(newPerson)
                 .then(returnedPerson => {
-                    setPersons(persons.concat(returnedPerson)) 
-                })
-            
-            setP({name: '', number: ''})
-                           
+                    setNotice({content: `Added ${newPerson.name}`})
+                    setPersons(persons.concat(returnedPerson))
+                })                           
         }
+
+        setP({name: '', number: ''})
+        setTimeout(() => setNotice(null), 2000)
     }
 
     // Delete contact in line
@@ -98,15 +103,18 @@ const App = () => {
                 .destroy(toDelContact.id)
                 .then(
                     delContact => {
+                        setNotice({content:`${ toDelContact.name } deleted`, type:"error"})
                         setPersons(persons.filter(p => p.id != delContact.id))
                     }
                 )
                 .catch(error => {
-                    console.log("${ toDelContact.name } was already deleted")
+                    setNotice({content:`${ toDelContact.name } was already deleted : ${error}`, type:"error"})
                     setPersons(persons.filter(p => p.id != toDelContact.id))
                 })
         } else {}
 
+        setP({name: '', number: ''})
+        setTimeout(() => setNotice(null), 2000)
     }
 
 
@@ -130,6 +138,9 @@ const App = () => {
                     onClick={handlePersonDelete}
                 />
             </tbody></table>
+            { notice !== null ? 
+                <Notification msg={notice} /> : null 
+            }
         </div>
     )
 }
