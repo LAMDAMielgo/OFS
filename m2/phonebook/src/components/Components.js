@@ -11,13 +11,18 @@ const Button = ({type, name}) => {
     )
 }
 
-const Content = ({lines}) => {
-
+const Content = ({lines, onClick}) => {
     return (
-        lines.map((line, i) => 
-            <tr key={i}>
+        lines.map((line) => 
+            <tr key={line.id}>
                 <th><pre className='cell'>{line.name}</pre></th>
                 <th><pre className='cell'>{line.number}</pre></th>
+                <th><button 
+                        name={line.name}
+                        id={line.id}
+                        onClick={onClick}>
+                            Delete contact
+                </button></th>
             </tr>
         )
     )

@@ -4,7 +4,6 @@ import {
     useMemo,
     useCallback
 } from 'react'
-import axios from 'axios'
 
 import { Subheader, Content } from './components/Components'
 import { PersonsForm } from './components/PersonsForm'
@@ -19,9 +18,11 @@ const App = () => {
     const [newP, setP] = useState({name: '', number: ''})
     const [newFilter, setFilter] = useState(" ")
 
+
     // Get data from server
     useEffect(
         () => {
+
             personService
                 .getAll()
                 .then(initPersons => setPersons(initPersons))
@@ -75,6 +76,28 @@ const App = () => {
         }
     }
 
+    // Delete contact in line
+    const handlePersonDelete = (event) => {
+
+        const toDelContact = event.target
+        const warning_msg = `Do you really want to delete ${ toDelContact.name }`
+        
+        if (window.confirm(warning_msg) === true) {
+            personService
+                .destroy(toDelContact.id)
+                .then(
+                    delContact => {
+                        setPersons(persons.filter(p => p.id != delContact.id))
+                    }
+                )
+                .catch(error => {
+                    console.log("${ toDelContact.name } was already deleted")
+                    setPersons(persons.filter(p => p.id != toDelContact.id))
+                })
+        } else {}
+
+    }
+
     return (
         <div>
             <Subheader text={'Phonebook'} />
@@ -90,7 +113,10 @@ const App = () => {
             />
             <Subheader text={'Numbers'} />
             <table><tbody>
-                <Content lines={filteredPersons} />
+                <Content 
+                    lines={filteredPersons}
+                    onClick={handlePersonDelete}
+                />
             </tbody></table>
         </div>
     )

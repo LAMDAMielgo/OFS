@@ -27,10 +27,16 @@ const update = (id, newObject) => {
     .then(response => responseSuccess(response))
 }
 
+const destroy = (toDelId) => {
+    return axios
+      .delete(`${baseUrl}/${toDelId}`)
+      .then(response => console.log(response))
+  }
 
 
 export default { 
     getAll, 
     create, 
-    update 
+    update,
+    destroy
 }
