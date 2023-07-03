@@ -1,6 +1,6 @@
 const express = require('express')
 const app = express()
-
+app.use(express.json())
 
 let persons = [
     {
@@ -26,6 +26,12 @@ let persons = [
 ]
 
 
+const generateNewId = () => {
+    const maxId = persons.length > 0 ? 
+        Math.max(...persons.map(n => n.id)) : 0
+    
+    return maxId+1
+}
 
 // ------------------------------------------------------------------
 // endPoints
@@ -35,15 +41,6 @@ app.get('/',
         response.send(`<h1>Hello World!</h1>`)
     }
 )
-
-app.get('/api/persons', 
-    (request, response) => {
-        if (persons) { response.json(persons) }
-        else {response.status(404).end()}
-    }
-)
-
-
 app.get("/info",
     (request, response) => {
 
@@ -56,6 +53,58 @@ app.get("/info",
     }
 )
 
+// ------------------------------------------------------------------
+// Persons
+
+app.get('/api/persons', 
+    (request, response) => {
+        if (persons) { response.json(persons) }
+        else {response.status(404).end()}
+    }
+)
+app.post("/api/persons",
+    (request, response) => {
+
+        const body = request.body
+
+        let sameName = persons.filter(p => p.name == body.name)
+        let sameNumber = persons.filter(p => p.number == body.number)
+
+        if (!body) {
+            return response
+                .status(400)
+                .json({error: 'content missing'})
+
+        } else if (sameName.length !== 0) {
+            // if name already exists 
+            return response
+                .status(400)
+                .json({error: `name ${body.name} already exists in the database`})
+
+
+        } else if (sameNumber.length !== 0) {
+            // if phone already exists
+            return response
+                .status(400)
+                .json({error: `phone-number ${body.number} already exists in the database`})
+
+        } else {
+
+            const newPerson = {
+                id: generateNewId(),
+                name : body.name,
+                number : body.number || null
+            }
+
+            persons = persons.concat(newPerson)
+            response.json(newPerson)
+        }
+    }
+    
+)
+
+// ------------------------------------------------------------------
+// ids
 
 app.get("/api/persons/:id",
     (request, response) => {
@@ -71,7 +120,17 @@ app.get("/api/persons/:id",
         }
     }
 )
+app.delete("/api/persons/:id",
+    (request, response) => {
 
+        let id = Number(request.params.id)
+        // update persons
+        persons = persons.find(p => p.id !== id)
+        
+        response.status(204).end()
+        
+    }
+)
 
 // ------------------------------------------------------------------
 // server
