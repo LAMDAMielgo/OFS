@@ -1,0 +1,75 @@
+/* 
+  General classes
+*/
+
+.h2 {
+    color : rgb(11, 6, 66);
+    font-family: sans-serif;
+}
+
+.button {
+    padding: 2px;
+    border-radius: 3px;
+}
+
+
+
+
+/* 
+   Custom classes
+*/
+.cell {
+    text-align: left;
+    margin-left: 5px;
+    margin-right: 10px;
+}
+
+.entry-tag {
+    text-align: left;
+    margin-right: 10px;
+}
+
+.delete-button {
+    background-color :rgb(174, 7, 35);
+
+    padding: 4px;
+    border-radius: 10px;
+    color : rgb(234, 178, 238);
+    border-color: rgb(234, 178, 238);
+    border-style: solid; 
+}
+
+.add-button {
+    background-color :rgb(11, 6, 66);
+
+    padding: 4px;
+    border-radius: 10px;
+    color : lightblue;
+    border-color: lightblue;
+    border-style: solid; 
+    
+
+}
+
+.notification {
+    background-color: aquamarine;
+    color: blueviolet;
+    font-style: italic;
+    font-family: sans-serif;
+    font-size: 14px;
+
+    margin: 5px;
+    border-radius: 20px;
+}
+
+.notification-error {
+    background-color: coral;
+    color: crimson;
+    font-style: italic;
+    font-weight: bold;
+    font-family: sans-serif;
+    font-size: 14px;
+
+    margin: 5px;
+    border-radius: 20px;
+}
