@@ -8,11 +8,13 @@ import {
 import {
     Subheader,
     ShowCountriesList,
-    ShowCountryContent
+    ShowCountryContent,
+    ShowWeatherContent
 } from './components/Components'
 
 import { FilterForm } from './components/FilterForm'
 import countriesService from './services/Countries'
+import weatherService from './services/Weather'
 
 
 
@@ -23,6 +25,7 @@ const App = () => {
     // searchCountries is what the user writes in the input
     const [countries, setCountries] = useState([]) 
     const [searchCountry, setSearchCountry] = useState("")
+    const [weather, setWeather] = useState(null)
 
 
     // Filtering phonebook
@@ -48,6 +51,16 @@ const App = () => {
         }, [filteredCountries]
     )
 
+    useEffect (
+        () => {
+            if (filteredCountries.length === 1) {
+                weatherService
+                .getWeatherData(filteredCountries[0])
+                .then(weatherData => setWeather(weatherData))
+            }
+        }, [filteredCountries]
+    )
+
     return (
         <div>
             <Subheader text={'Country search app'} />
@@ -65,7 +78,15 @@ const App = () => {
                         onClick={ViewCountry}
                     />
                     : 
-                    <ShowCountryContent country = {filteredCountries[0]} />
+                    <ShowCountryContent 
+                        country = {filteredCountries[0]} 
+                    />
+            }
+            { weather === null ? 
+                null : <ShowWeatherContent 
+                    capital = {filteredCountries[0].capital[0]}
+                    weather = {weather}
+                />
             }
         </div>
     )
