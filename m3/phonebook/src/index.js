@@ -21,7 +21,17 @@ app.get('/api/persons',
 )
 
 
+app.get("/info",
+    (request, response) => {
 
+        let currentDate = new Date()
+        let numPersons = Persons.length
+
+        response.send(
+            `<p>Phonebook has info for ${numPersons} people <br/> ${currentDate}`
+        )
+    }
+)
 
 // ------------------------------------------------------------------
 // server
