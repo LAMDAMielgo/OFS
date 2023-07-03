@@ -5,7 +5,7 @@ const FormEntry = ({name, value, onChange}) => {
         <div>
             {name}   
             <input
-                name = {name}
+                name={name}
                 value={value} 
                 onChange={onChange}
             />

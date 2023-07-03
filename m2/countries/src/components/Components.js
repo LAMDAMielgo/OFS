@@ -5,14 +5,28 @@ const Subheader = ({text}) => {
     return <h2 className='h2'>{text}</h2>
 }
 
-const ShowCountriesList = ({countries}) => {
-    return countries.map(
-        (country, id) => <li key={id}>{country.name.common}</li>
+const ShowCountriesList = ({countries, onClick}) => {
+    return (
+        <table><tbody> {
+            countries.map(
+                (line, id) => (
+                    <tr key={id}>
+                        <th>{line.name.common}</th>
+                        <th><button
+                            id={id}
+                            name={line.name.common}
+                            onClick={onClick}>
+                            add
+                        </button></th>
+                    </tr>
+                )
+        )} 
+    </tbody></table>
     )
 }
 
-const Content = ({country}) => {
 
+const Content = ({country}) => {
     console.log("content country", country)
 
     return (
@@ -27,11 +41,15 @@ const Content = ({country}) => {
                     (l,i) => <li key={i}>{l}</li>
                 )
             }</ul>
+            <img src={country.flags.png} alt={country.flags.alt} />
         </div>
     )
 }
 
+
 const ShowCountryContent = ({country}) => {
+
+    console.log("show content country", country)
 
     return (
         <div>

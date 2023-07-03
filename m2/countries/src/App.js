@@ -30,20 +30,23 @@ const App = () => {
         setSearchCountry(event.target.value)
     }
 
-    const filteredCountries = countries.filter(
+    const filteredCountries =countries.filter(
         country => country.name.common
             .toLowerCase()
             .includes(searchCountry.toLowerCase())
     )
     
+    const ViewCountry = (event) => {
+        setSearchCountry(event.target.name)
+    }
+
     useEffect(
         () => {
             countriesService
                 .getAllNames(filteredCountries)
                 .then(availableCountries => setCountries(availableCountries))
         }, [filteredCountries]
-    )   
-
+    )
 
     return (
         <div>
@@ -57,8 +60,11 @@ const App = () => {
                     <p>Too many matches, specify another filter</p>
                 :
                 filteredCountries.length != 1 ?
-                    <ShowCountriesList countries = {filteredCountries} />
-                    :
+                    <ShowCountriesList 
+                        countries = {filteredCountries}
+                        onClick={ViewCountry}
+                    />
+                    : 
                     <ShowCountryContent country = {filteredCountries[0]} />
             }
         </div>
