@@ -133,6 +133,8 @@ app.get("/api/persons/:id",
 app.delete("/api/persons/:id",
     (request, response) => {
 
+        console.log(request.body)
+        
         let id = Number(request.params.id)
         // update persons
         persons = persons.find(p => p.id !== id)
