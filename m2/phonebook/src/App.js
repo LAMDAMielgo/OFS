@@ -26,7 +26,7 @@ const App = () => {
             personService
                 .getAll()
                 .then(initPersons => setPersons(initPersons))
-        }
+        }, [filteredPersons]
     )
 
     // Filtering phonebook
