@@ -23,7 +23,6 @@ const App = () => {
     // Get data from server
     useEffect(
         () => {
-
             personService
                 .getAll()
                 .then(initPersons => setPersons(initPersons))
@@ -39,11 +38,13 @@ const App = () => {
     console.log("front app", persons)
     console.log("filter", newFilter)
 
-    const filteredPersons = persons.filter(
-        person => person.name
-            .toLowerCase()
-            .includes(newFilter.toLowerCase())
-    )    
+    const filteredPersons = useMemo(
+        () => persons.filter(
+            person => person.name
+                .toLowerCase()
+                .includes(newFilter.toLowerCase())
+        ), [newFilter]
+    )
 
     // Adding new rows to phonebook
     const handleFormOnChange = (event) => {
