@@ -36,6 +36,8 @@ const App = () => {
         setFilter(filterContent)
     }
 
+    console.log("front app", persons)
+    
     const filteredPersons = persons.filter(
         person => person.name
             .toLowerCase()
