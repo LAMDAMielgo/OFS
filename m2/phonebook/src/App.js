@@ -26,7 +26,7 @@ const App = () => {
             personService
                 .getAll()
                 .then(initPersons => setPersons(initPersons))
-        }, [filteredPersons]
+        }, [filteredPersons, persons]
     )
 
     // Filtering phonebook
@@ -43,7 +43,7 @@ const App = () => {
             person => person.name
                 .toLowerCase()
                 .includes(newFilter.toLowerCase())
-        ), [newFilter]
+        ), [newFilter, newP]
     )
 
     // Adding new rows to phonebook
