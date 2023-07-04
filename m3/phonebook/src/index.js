@@ -134,11 +134,13 @@ app.delete("/api/persons/:id",
     (request, response) => {
 
         console.log(request.body)
-        
+
         let id = Number(request.params.id)
         // update persons
-        persons = persons.find(p => p.id !== id)
+        persons = persons.find(p => p.id != id)
         
+        console.log("backend app", persons)
+
         response.status(204).end()
         
     }
