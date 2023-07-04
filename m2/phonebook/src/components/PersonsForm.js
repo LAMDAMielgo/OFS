@@ -3,8 +3,6 @@ import { Button, FormEntry } from './Components'
 
 
 
-
-
 const PersonsForm = ({onSubmit, newPerson, onChange}) => {
     
     return (
