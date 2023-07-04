@@ -17,7 +17,7 @@ const App = () => {
 
     const [persons, setPersons] = useState([]) 
     const [newP, setP] = useState({name: '', number: ''})
-    const [newFilter, setFilter] = useState(" ")
+    const [newFilter, setFilter] = useState("")
     const [notice, setNotice] = useState(null)
 
     // Get data from server
@@ -37,7 +37,8 @@ const App = () => {
     }
 
     console.log("front app", persons)
-    
+    console.log("filter", newFilter)
+
     const filteredPersons = persons.filter(
         person => person.name
             .toLowerCase()

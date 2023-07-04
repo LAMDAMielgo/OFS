@@ -10,9 +10,6 @@ const responseSuccess = (response) => {
 }
 
 const getAll = () => {
-
-  console.log("getAll")
-
   return axios
     .get(baseUrl)
     .then(response => responseSuccess(response))
